@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ExpandableCard from './ExpandableCard';
 import { ArrowUpRight, ChevronUp, ChevronDown, CheckCircle2 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -7,6 +8,7 @@ import { Button } from "@/components/ui/button";
 const WhatsAppSetup = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
+  const navigate = useNavigate();
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
@@ -18,8 +20,8 @@ const WhatsAppSetup = () => {
   };
 
   const handleProceed = () => {
-    // Handle proceed action
-    console.log("Proceeding to next step");
+    // Navigate to the dashboard page
+    navigate('/dashboard');
   };
 
   return (
