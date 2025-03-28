@@ -6,9 +6,20 @@ import { Button } from "@/components/ui/button";
 
 const WhatsAppSetup = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
+  };
+
+  const handleConnect = () => {
+    // Simulate connection success
+    setIsConnected(true);
+  };
+
+  const handleProceed = () => {
+    // Handle proceed action
+    console.log("Proceeding to next step");
   };
 
   return (
@@ -32,14 +43,26 @@ const WhatsAppSetup = () => {
         title="Create a free account on Interakt"
         isOpen={isExpanded}
         onToggle={toggleExpand}
-        isCompleted={false}
+        isCompleted={isConnected}
       >
         <div className="py-4">
           <div className="flex justify-between items-center mb-4">
             <div className="text-gray-600">Interakt Account</div>
-            <Button className="bg-teal-600 hover:bg-teal-700">
-              Connect
-            </Button>
+            {isConnected ? (
+              <Button 
+                className="bg-green-500 hover:bg-green-600 text-white" 
+                disabled
+              >
+                Connected
+              </Button>
+            ) : (
+              <Button 
+                className="bg-teal-600 hover:bg-teal-700" 
+                onClick={handleConnect}
+              >
+                Connect
+              </Button>
+            )}
           </div>
           
           <p className="text-gray-600 mb-4">
@@ -55,6 +78,16 @@ const WhatsAppSetup = () => {
           </a>
         </div>
       </ExpandableCard>
+
+      <div className="mt-6 flex justify-center">
+        <Button
+          className={isConnected ? "bg-teal-600 hover:bg-teal-700" : "bg-gray-300 text-gray-500 cursor-not-allowed hover:bg-gray-300"}
+          disabled={!isConnected}
+          onClick={handleProceed}
+        >
+          Proceed
+        </Button>
+      </div>
 
       <div className="mt-10 flex justify-center">
         <a href="#" className="text-teal-600 hover:text-teal-700 text-sm flex items-center">
