@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react';
+import { CheckCircle2, ChevronDown, ChevronUp, Circle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ExpandableCardProps {
@@ -25,12 +25,14 @@ const ExpandableCard = ({
         onClick={onToggle}
       >
         <div className="flex items-center">
+          {isCompleted ? (
+            <CheckCircle2 className="h-5 w-5 text-green-500 mr-2" />
+          ) : (
+            <Circle className="h-5 w-5 text-gray-400 mr-2" />
+          )}
           <span className="font-medium text-gray-700">{title}</span>
         </div>
         <div className="flex items-center">
-          {isCompleted && (
-            <CheckCircle2 className="h-5 w-5 text-green-500 mr-2" />
-          )}
           {isOpen ? (
             <ChevronUp className="h-5 w-5 text-gray-400" />
           ) : (
