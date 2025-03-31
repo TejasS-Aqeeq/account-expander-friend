@@ -7,7 +7,7 @@ const WhatsAppHeader: React.FC = () => {
     <div className="mb-6">
       <div className="flex justify-between items-center mb-2">
         <h1 className="text-xl font-semibold text-gray-700">Set up your Shopify-synced WhatsApp Store!</h1>
-        <a href="#" className="text-teal-600 hover:text-teal-700 text-sm flex items-center">
+        <a href="#" className="text-teal-500 hover:text-teal-600 text-sm flex items-center">
           Get Support <ArrowUpRight className="ml-1 h-4 w-4" />
         </a>
       </div>
