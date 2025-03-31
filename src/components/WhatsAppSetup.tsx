@@ -1,7 +1,8 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ExpandableCard from './ExpandableCard';
-import { ArrowUpRight, ChevronUp, ChevronDown, CheckCircle2 } from 'lucide-react';
+import { ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
@@ -9,6 +10,7 @@ const WhatsAppSetup = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [popupWindow, setPopupWindow] = useState<Window | null>(null);
+  const [isCheckingConnection, setIsCheckingConnection] = useState(false);
   const navigate = useNavigate();
 
   // Mock Shopify token - in a real app, you would get this from Shopify's authentication
@@ -34,6 +36,39 @@ const WhatsAppSetup = () => {
       window.removeEventListener("message", handleMessage);
     };
   }, [popupWindow]);
+
+  // Add this effect to periodically check if the connection was successful
+  // This is a backup in case the postMessage doesn't work
+  useEffect(() => {
+    if (!popupWindow || isConnected || !isCheckingConnection) return;
+
+    const checkConnectionInterval = setInterval(() => {
+      try {
+        // If the window is closed, check if we should mark as connected
+        if (popupWindow.closed) {
+          // We can simulate a successful connection here or check with an API
+          // For this demo, we'll check localStorage which the popup might have set
+          const connectionStatus = localStorage.getItem('interakt_connection_status');
+          if (connectionStatus === 'connected') {
+            setIsConnected(true);
+            toast.success("Successfully connected to Interakt!");
+            localStorage.removeItem('interakt_connection_status'); // Clean up
+          } else {
+            toast.error("Connection was not completed");
+          }
+          setIsCheckingConnection(false);
+          clearInterval(checkConnectionInterval);
+        }
+      } catch (error) {
+        // Handle cross-origin errors which might occur when checking window properties
+        console.error("Error checking popup status:", error);
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(checkConnectionInterval);
+    };
+  }, [popupWindow, isConnected, isCheckingConnection]);
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
@@ -64,14 +99,44 @@ const WhatsAppSetup = () => {
     
     if (newWindow) {
       setPopupWindow(newWindow);
+      setIsCheckingConnection(true);
+      
+      // Add script to the popup to handle successful authentication
+      try {
+        // This will only work if same-origin policy allows it
+        newWindow.addEventListener('load', () => {
+          // Add code in the popup that will run when authentication is successful
+          // Note: This can only work if both windows are from the same origin
+          newWindow.document.body.innerHTML += `
+            <script>
+              function notifyParentWindow() {
+                // When auth is successful, notify the parent window
+                window.opener.postMessage({status: 'connected'}, "${window.location.origin}");
+                localStorage.setItem('interakt_connection_status', 'connected');
+                // Close automatically after a short delay
+                setTimeout(() => window.close(), 1000);
+              }
+              
+              // Call this function when authentication succeeds
+              // This would be called by your auth logic in the popup
+              // For demo purposes, we'll simulate success after 3 seconds
+              setTimeout(notifyParentWindow, 3000);
+            </script>
+          `;
+        });
+      } catch (error) {
+        // Handle cross-origin exceptions
+        console.log("Cross-origin restriction prevented script injection");
+      }
       
       // Poll to check if the popup is closed
       const checkPopupClosed = setInterval(() => {
         if (newWindow.closed) {
           clearInterval(checkPopupClosed);
           // If the popup closes without authentication completing, handle that case
-          if (!isConnected) {
-            toast.error("Connection was cancelled");
+          if (!isConnected && isCheckingConnection) {
+            setIsCheckingConnection(false);
+            // We don't show an error here since the localStorage check might still detect a successful connection
           }
         }
       }, 500);
@@ -132,8 +197,9 @@ const WhatsAppSetup = () => {
               <Button 
                 className="bg-teal-600 hover:bg-teal-700" 
                 onClick={handleConnect}
+                disabled={isCheckingConnection}
               >
-                Connect
+                {isCheckingConnection ? "Connecting..." : "Connect"}
               </Button>
             )}
           </div>
