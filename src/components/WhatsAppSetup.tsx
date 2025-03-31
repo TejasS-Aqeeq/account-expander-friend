@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ExpandableCard from './ExpandableCard';
 import { ArrowUpRight, ChevronUp, ChevronDown, CheckCircle2 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 const WhatsAppSetup = () => {
   const [isExpanded, setIsExpanded] = useState(false);
