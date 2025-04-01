@@ -16,6 +16,7 @@ const ConnectButton: React.FC<ConnectButtonProps> = ({
   if (isConnected) {
     return (
       <Button 
+        variant="default"
         className="bg-green-500 hover:bg-green-600 text-white" 
         disabled
       >
@@ -26,7 +27,8 @@ const ConnectButton: React.FC<ConnectButtonProps> = ({
   
   return (
     <Button 
-      className="bg-teal-600 hover:bg-teal-700" 
+      variant="default"
+      className="bg-teal-400 hover:bg-teal-500" 
       onClick={onConnect}
       disabled={isCheckingConnection}
     >
