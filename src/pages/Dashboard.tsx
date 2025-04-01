@@ -1,12 +1,14 @@
-
 import React, { useState } from 'react';
 import { ArrowUpRight, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
 
 const Dashboard = () => {
+  // Get logout function from auth context
+  const { logout } = useAuth();
+  
   // State to track sync status
   const [syncStatus, setSyncStatus] = useState<'syncing' | 'completed'>('syncing');
   const [approvedCount, setApprovedCount] = useState(6);
@@ -27,9 +29,8 @@ const Dashboard = () => {
   }, [syncStatus]);
   
   const handleDisconnect = () => {
-    // Handle disconnect logic here
-    console.log("Disconnecting Interakt account");
-    // In a real app, we would make an API call here
+    // Use the logout function from auth context
+    logout();
   };
   
   return (

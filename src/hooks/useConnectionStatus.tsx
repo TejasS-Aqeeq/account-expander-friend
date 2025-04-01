@@ -2,11 +2,25 @@
 import { useState, useEffect } from 'react';
 import { toast } from "sonner";
 import { openAuthPopup } from '@/utils/authPopupUtils';
+import { useAuth } from '@/context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export const useConnectionStatus = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [popupWindow, setPopupWindow] = useState<Window | null>(null);
   const [isCheckingConnection, setIsCheckingConnection] = useState(false);
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  // Check local storage on mount for persistent connection status
+  useEffect(() => {
+    const connectionStatus = localStorage.getItem('interakt_connection_status');
+    if (connectionStatus === 'connected') {
+      setIsConnected(true);
+      // If already connected and on index page, redirect to dashboard
+      navigate('/dashboard');
+    }
+  }, [navigate]);
 
   useEffect(() => {
     // Listen for messages from the popup window
@@ -17,10 +31,13 @@ export const useConnectionStatus = () => {
       if (event.data.status === "connected") {
         setIsConnected(true);
         setIsCheckingConnection(false);
+        login(); // Update auth context
         if (popupWindow && !popupWindow.closed) {
           popupWindow.close();
         }
         toast.success("Successfully connected to Interakt!");
+        // Redirect to dashboard upon successful connection
+        navigate('/dashboard');
       }
     };
 
@@ -28,7 +45,7 @@ export const useConnectionStatus = () => {
     return () => {
       window.removeEventListener("message", handleMessage);
     };
-  }, [popupWindow]);
+  }, [popupWindow, login, navigate]);
 
   // Add this effect to periodically check if the connection was successful
   // This is a backup in case the postMessage doesn't work
@@ -44,7 +61,10 @@ export const useConnectionStatus = () => {
           const connectionStatus = localStorage.getItem('interakt_connection_status');
           if (connectionStatus === 'connected') {
             setIsConnected(true);
+            login(); // Update auth context
             toast.success("Successfully connected to Interakt!");
+            // Redirect to dashboard after connection
+            navigate('/dashboard');
             localStorage.removeItem('interakt_connection_status'); // Clean up
           } else {
             // Only show error if we haven't already marked as connected
@@ -64,7 +84,7 @@ export const useConnectionStatus = () => {
     return () => {
       clearInterval(checkConnectionInterval);
     };
-  }, [popupWindow, isConnected, isCheckingConnection]);
+  }, [popupWindow, isConnected, isCheckingConnection, login, navigate]);
 
   const handleConnect = () => {
     const newWindow = openAuthPopup();
@@ -82,7 +102,10 @@ export const useConnectionStatus = () => {
             const connectionStatus = localStorage.getItem('interakt_connection_status');
             if (connectionStatus === 'connected') {
               setIsConnected(true);
+              login(); // Update auth context
               toast.success("Successfully connected to Interakt!");
+              // Redirect to dashboard
+              navigate('/dashboard');
               localStorage.removeItem('interakt_connection_status'); // Clean up
             } else {
               setIsCheckingConnection(false);
