@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ArrowUpRight, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -55,7 +54,7 @@ const Dashboard = () => {
         {/* Product Status Card */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Product Status on ShopLinx</CardTitle>
+            <CardTitle className="text-lg">Product Status on Interakt</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="bg-blue-50 border border-blue-100 p-4 rounded-lg mb-4">
@@ -93,10 +92,10 @@ const Dashboard = () => {
           </CardContent>
         </Card>
         
-        {/* ShopLinx Account Card */}
+        {/* Interakt Account Card */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">ShopLinx account</CardTitle>
+            <CardTitle className="text-lg">Interakt account</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-start mb-4">
@@ -122,7 +121,7 @@ const Dashboard = () => {
             <p className="text-gray-600 mb-1">
               Send a WhatsApp message to your WhatsApp API number and reply to it from the{' '}
               <a href="#" className="text-teal-600 hover:text-teal-700 inline-flex items-center">
-                ShopLinx Inbox <ArrowUpRight className="ml-1 h-3 w-3" />
+                Interakt Inbox <ArrowUpRight className="ml-1 h-3 w-3" />
               </a>{' '}
               !
             </p>
@@ -149,7 +148,7 @@ const Dashboard = () => {
           <div className="flex flex-col md:flex-row justify-between">
             <div className="md:w-1/2 mb-4 md:mb-0">
               <p className="text-gray-600">
-                While chatting with customers on WhatsApp, send them your Shopify products from the ShopLinx inbox.
+                While chatting with customers on WhatsApp, send them your Shopify products from the Interakt inbox.
               </p>
             </div>
             <div className="md:w-1/2 flex flex-col items-center md:items-end">
