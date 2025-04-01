@@ -13,7 +13,7 @@ const ShopifyAuth = () => {
   // Function to handle login completion
   const completeLogin = () => {
     // Set connection status in localStorage for persistence
-    localStorage.setItem('interakt_connection_status', 'connected');
+    localStorage.setItem('shoplinx_connection_status', 'connected');
     
     // Send message to parent window about successful connection
     if (window.opener) {
