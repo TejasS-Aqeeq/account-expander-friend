@@ -1,3 +1,4 @@
+
 /**
  * Utility functions for handling popup authentication
  */
@@ -29,10 +30,10 @@ export const openAuthPopup = (): Window | null => {
   // Store the state parameter in sessionStorage for verification when the popup returns
   sessionStorage.setItem('shoplinx_auth_state', stateParam);
   
-  // Create the popup URL with the state parameter - now pointing to our internal route
+  // Create the popup URL with the state parameter
   const popupUrl = `/auth/shopify?state=${stateParam}`;
   
-  // Open the popup window with our new route
+  // Open the popup window
   return window.open(
     popupUrl,
     'ShoplinxAuth',
