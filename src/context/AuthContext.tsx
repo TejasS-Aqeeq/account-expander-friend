@@ -14,10 +14,22 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  // Check if user is authenticated on mount
+  // Check if user is authenticated on mount and whenever localStorage changes
   useEffect(() => {
-    const authStatus = localStorage.getItem('interakt_connection_status');
-    setIsAuthenticated(authStatus === 'connected');
+    const checkAuthStatus = () => {
+      const authStatus = localStorage.getItem('interakt_connection_status');
+      setIsAuthenticated(authStatus === 'connected');
+    };
+
+    // Initial check
+    checkAuthStatus();
+
+    // Listen for storage changes (in case another tab changes auth status)
+    window.addEventListener('storage', checkAuthStatus);
+    
+    return () => {
+      window.removeEventListener('storage', checkAuthStatus);
+    };
   }, []);
 
   const login = () => {
