@@ -14,7 +14,7 @@ export const useConnectionStatus = () => {
 
   // Check local storage on mount for persistent connection status
   useEffect(() => {
-    const connectionStatus = localStorage.getItem('interakt_connection_status');
+    const connectionStatus = localStorage.getItem('shoplinx_connection_status');
     if (connectionStatus === 'connected') {
       setIsConnected(true);
       // If already connected and on index page, redirect to dashboard
@@ -58,14 +58,14 @@ export const useConnectionStatus = () => {
         if (popupWindow.closed) {
           // We can simulate a successful connection here or check with an API
           // For this demo, we'll check localStorage which the popup might have set
-          const connectionStatus = localStorage.getItem('interakt_connection_status');
+          const connectionStatus = localStorage.getItem('shoplinx_connection_status');
           if (connectionStatus === 'connected') {
             setIsConnected(true);
             login(); // Update auth context
             toast.success("Successfully connected to ShopLinx!");
             // Redirect to dashboard after connection
             navigate('/dashboard');
-            localStorage.removeItem('interakt_connection_status'); // Clean up
+            localStorage.removeItem('shoplinx_connection_status'); // Clean up
           } else {
             // Only show error if we haven't already marked as connected
             if (!isConnected) {
@@ -99,14 +99,14 @@ export const useConnectionStatus = () => {
           // If the popup closes without authentication completing, handle that case
           if (!isConnected && isCheckingConnection) {
             // Check localStorage one more time before showing an error
-            const connectionStatus = localStorage.getItem('interakt_connection_status');
+            const connectionStatus = localStorage.getItem('shoplinx_connection_status');
             if (connectionStatus === 'connected') {
               setIsConnected(true);
               login(); // Update auth context
               toast.success("Successfully connected to ShopLinx!");
               // Redirect to dashboard
               navigate('/dashboard');
-              localStorage.removeItem('interakt_connection_status'); // Clean up
+              localStorage.removeItem('shoplinx_connection_status'); // Clean up
             } else {
               setIsCheckingConnection(false);
             }
