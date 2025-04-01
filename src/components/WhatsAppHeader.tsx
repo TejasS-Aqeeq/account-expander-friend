@@ -12,7 +12,7 @@ const WhatsAppHeader: React.FC = () => {
         </a>
       </div>
       <p className="text-gray-500 mb-2">
-        Interakt is an Official WhatsApp Business Service Provider.
+        ShopLinx is an Official WhatsApp Business Service Provider.
       </p>
       <p className="text-gray-500">
         We enable businesses to better utilize WhatsApp by accessing WhatsApp APIs.

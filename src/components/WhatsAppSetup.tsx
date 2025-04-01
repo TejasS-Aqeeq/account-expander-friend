@@ -26,7 +26,7 @@ const WhatsAppSetup = () => {
       <WhatsAppHeader />
 
       <ExpandableCard 
-        title="Create a free account on Interakt"
+        title="Create a free account on ShopLinx"
         isOpen={isExpanded}
         onToggle={toggleExpand}
         isCompleted={isConnected}

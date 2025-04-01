@@ -44,11 +44,11 @@ const ShopifyAuth = () => {
         return (
           <Card className="w-full max-w-md">
             <CardHeader>
-              <CardTitle className="text-2xl font-bold">Welcome to Interakt</CardTitle>
+              <CardTitle className="text-2xl font-bold">Welcome to ShopLinx</CardTitle>
               <CardDescription>Connect with your Shopify store</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="mb-4">To get started, please connect your Shopify store with Interakt.</p>
+              <p className="mb-4">To get started, please connect your Shopify store with ShopLinx.</p>
             </CardContent>
             <CardFooter>
               <Button className="w-full" onClick={() => setStep('phone')}>Continue</Button>
@@ -119,7 +119,7 @@ const ShopifyAuth = () => {
           <Card className="w-full max-w-md">
             <CardHeader>
               <CardTitle className="text-2xl font-bold">Successfully Connected!</CardTitle>
-              <CardDescription>Your Shopify store is now connected to Interakt</CardDescription>
+              <CardDescription>Your Shopify store is now connected to ShopLinx</CardDescription>
             </CardHeader>
             <CardContent>
               <p className="mb-4">You will be redirected back to the application automatically.</p>

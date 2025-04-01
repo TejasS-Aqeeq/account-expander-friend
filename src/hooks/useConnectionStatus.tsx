@@ -35,7 +35,7 @@ export const useConnectionStatus = () => {
         if (popupWindow && !popupWindow.closed) {
           popupWindow.close();
         }
-        toast.success("Successfully connected to Interakt!");
+        toast.success("Successfully connected to ShopLinx!");
         // Redirect to dashboard upon successful connection
         navigate('/dashboard');
       }
@@ -62,7 +62,7 @@ export const useConnectionStatus = () => {
           if (connectionStatus === 'connected') {
             setIsConnected(true);
             login(); // Update auth context
-            toast.success("Successfully connected to Interakt!");
+            toast.success("Successfully connected to ShopLinx!");
             // Redirect to dashboard after connection
             navigate('/dashboard');
             localStorage.removeItem('interakt_connection_status'); // Clean up
@@ -103,7 +103,7 @@ export const useConnectionStatus = () => {
             if (connectionStatus === 'connected') {
               setIsConnected(true);
               login(); // Update auth context
-              toast.success("Successfully connected to Interakt!");
+              toast.success("Successfully connected to ShopLinx!");
               // Redirect to dashboard
               navigate('/dashboard');
               localStorage.removeItem('interakt_connection_status'); // Clean up

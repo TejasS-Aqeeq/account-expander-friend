@@ -17,7 +17,7 @@ const ConnectionCardContent: React.FC<ConnectionCardContentProps> = ({
   return (
     <div className="py-4">
       <div className="flex justify-between items-center mb-4">
-        <div className="text-gray-600">Interakt Account</div>
+        <div className="text-gray-600">ShopLinx Account</div>
         <ConnectButton 
           isConnected={isConnected}
           isCheckingConnection={isCheckingConnection}
@@ -26,7 +26,7 @@ const ConnectionCardContent: React.FC<ConnectionCardContentProps> = ({
       </div>
       
       <p className="text-gray-600 mb-4">
-        By clicking on Connect, you will be able to create an Interakt account and connect it to your Shopify Store.
+        By clicking on Connect, you will be able to create a ShopLinx account and connect it to your Shopify Store.
       </p>
       
       <p className="text-gray-500 mb-2">
