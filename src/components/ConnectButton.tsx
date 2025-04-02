@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Button } from "@shopify/polaris";
+import { Button } from '@shopify/polaris';
 
 interface ConnectButtonProps {
   isConnected: boolean;
@@ -15,20 +15,15 @@ const ConnectButton: React.FC<ConnectButtonProps> = ({
 }) => {
   if (isConnected) {
     return (
-      <Button
-        disabled
-        tone="success"
-      >
-        Connected
-      </Button>
+      <Button disabled>Connected</Button>
     );
   }
   
   return (
-    <Button
+    <Button 
       onClick={onConnect}
-      disabled={isCheckingConnection}
-      tone="success"
+      loading={isCheckingConnection}
+      primary
     >
       {isCheckingConnection ? "Connecting..." : "Connect"}
     </Button>

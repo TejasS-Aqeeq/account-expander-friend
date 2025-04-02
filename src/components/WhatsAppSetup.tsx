@@ -2,66 +2,64 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
-  Page, 
   Card, 
-  Button,
-  LegacyCard,
-  BlockStack,
-  Box
+  Page, 
+  Layout, 
+  Collapsible 
 } from '@shopify/polaris';
 import WhatsAppHeader from './WhatsAppHeader';
 import ConnectionCardContent from './ConnectionCardContent';
 import WhatsAppFooter from './WhatsAppFooter';
-import { useConnectionStatus } from '@/hooks/useConnectionStatus';
+import { useConnectionStatus } from '../hooks/useConnectionStatus';
 
 const WhatsAppSetup = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const navigate = useNavigate();
   const { isConnected, isCheckingConnection, handleConnect } = useConnectionStatus();
 
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
-
   const handleProceed = () => {
     // Navigate to the dashboard page
     navigate('/dashboard');
   };
 
+  const toggleCollapsible = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   return (
     <Page>
-      <Box padding="4" maxWidth="680px" margin="auto">
-        <Card>
-          <BlockStack gap="4">
-            <Box padding="4">
+      <Layout>
+        <Layout.Section>
+          <Card>
+            <Card.Section>
               <WhatsAppHeader />
-            </Box>
+            </Card.Section>
             
-            <Box padding={{horizontal: "4", bottom: "4"}}>
-              <LegacyCard
-                title="Create a free account on ShopLinx"
-                sectioned
-                expandable
-                expanded={isExpanded}
-                onToggle={toggleExpand}
+            <Card.Section 
+              title="Create a free account on ShopLinx"
+              onClick={toggleCollapsible}
+            >
+              <Collapsible 
+                open={isExpanded} 
+                id="whatsapp-connection-collapsible"
               >
                 <ConnectionCardContent 
                   isConnected={isConnected}
                   isCheckingConnection={isCheckingConnection}
                   onConnect={handleConnect}
                 />
-              </LegacyCard>
-            </Box>
+              </Collapsible>
+            </Card.Section>
             
-            <Box padding="4">
+            <Card.Section>
               <WhatsAppFooter 
                 isConnected={isConnected}
                 onProceed={handleProceed}
               />
-            </Box>
-          </BlockStack>
-        </Card>
-      </Box>
+            </Card.Section>
+          </Card>
+        </Layout.Section>
+      </Layout>
     </Page>
   );
 };

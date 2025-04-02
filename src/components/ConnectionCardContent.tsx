@@ -3,11 +3,9 @@ import React from 'react';
 import { 
   Text, 
   Link,
-  BlockStack,
-  Box,
-  InlineStack,
   TextContainer
 } from '@shopify/polaris';
+import { ExternalMinor } from '@shopify/polaris-icons';
 import ConnectButton from './ConnectButton';
 
 interface ConnectionCardContentProps {
@@ -22,15 +20,15 @@ const ConnectionCardContent: React.FC<ConnectionCardContentProps> = ({
   onConnect
 }) => {
   return (
-    <BlockStack gap="4">
-      <InlineStack gap="4" align="space-between">
+    <div style={{ padding: '1rem 0' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
         <Text variant="bodyMd" color="subdued">ShopLinx Account</Text>
         <ConnectButton 
           isConnected={isConnected}
           isCheckingConnection={isCheckingConnection}
           onConnect={onConnect}
         />
-      </InlineStack>
+      </div>
       
       <TextContainer>
         <Text variant="bodyMd" color="subdued">
@@ -44,18 +42,20 @@ const ConnectionCardContent: React.FC<ConnectionCardContentProps> = ({
         </Text>
       </TextContainer>
       
-      <Link url="#" external monochrome removeUnderline>
-        <InlineStack gap="1" align="center">
-          <Text variant="bodySm" color="success">Terms & Conditions</Text>
-          <img 
-            src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2313855c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m7 17 10-10'/><path d='M7 7h10v10'/></svg>"
-            alt=""
-            width="16"
-            height="16"
-          />
-        </InlineStack>
-      </Link>
-    </BlockStack>
+      <div style={{ marginTop: '1rem' }}>
+        <Link url="#" external monochrome removeUnderline>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+            <Text variant="bodySm" color="success">Terms & Conditions</Text>
+            <img 
+              src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2313855c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m7 17 10-10'/><path d='M7 7h10v10'/></svg>"
+              alt=""
+              width="16"
+              height="16"
+            />
+          </div>
+        </Link>
+      </div>
+    </div>
   );
 };
 

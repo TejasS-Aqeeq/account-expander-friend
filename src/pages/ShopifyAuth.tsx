@@ -1,15 +1,12 @@
 
-import React, { useEffect, useState } from 'react';
-import {
+import React, { useState } from 'react';
+import { 
   Page,
   Card,
-  BlockStack,
-  Text,
+  FormLayout,
   TextField,
   Button,
-  Frame,
-  Box,
-  FormLayout
+  Text
 } from '@shopify/polaris';
 
 const ShopifyAuth = () => {
@@ -31,9 +28,7 @@ const ShopifyAuth = () => {
   };
 
   // Handle form submissions based on step
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
+  const handleSubmit = () => {
     if (step === 'initial') {
       setStep('phone');
     } else if (step === 'phone' && phoneNumber) {
@@ -49,111 +44,82 @@ const ShopifyAuth = () => {
     switch (step) {
       case 'initial':
         return (
-          <Card>
-            <BlockStack gap="4">
-              <BlockStack gap="1">
-                <Text variant="headingLg" as="h2">Welcome to ShopLinx</Text>
-                <Text variant="bodyMd" color="subdued">Connect with your Shopify store</Text>
-              </BlockStack>
-              
-              <Text variant="bodyMd">To get started, please connect your Shopify store with ShopLinx.</Text>
-              
-              <Box paddingBlockStart="2">
-                <Button primary onClick={() => setStep('phone')} fullWidth>Continue</Button>
-              </Box>
-            </BlockStack>
+          <Card sectioned>
+            <Card.Section title="Welcome to ShopLinx">
+              <Text>Connect with your Shopify store</Text>
+            </Card.Section>
+            <Card.Section>
+              <Text>To get started, please connect your Shopify store with ShopLinx.</Text>
+            </Card.Section>
+            <Card.Section>
+              <Button primary onClick={handleSubmit}>Continue</Button>
+            </Card.Section>
           </Card>
         );
         
       case 'phone':
         return (
-          <Card>
-            <BlockStack gap="4">
-              <BlockStack gap="1">
-                <Text variant="headingLg" as="h2">Enter your phone number</Text>
-                <Text variant="bodyMd" color="subdued">We'll send a code to verify your identity</Text>
-              </BlockStack>
-              
-              <form onSubmit={handleSubmit}>
-                <FormLayout>
-                  <TextField
-                    label="Phone Number"
-                    value={phoneNumber}
-                    onChange={(value) => setPhoneNumber(value)}
-                    type="tel"
-                    autoComplete="tel"
-                    requiredIndicator
-                  />
-                  
-                  <Box paddingBlockStart="2">
-                    <Button primary submit fullWidth>Send Code</Button>
-                  </Box>
-                </FormLayout>
-              </form>
-            </BlockStack>
+          <Card sectioned>
+            <Card.Section title="Enter your phone number">
+              <Text>We'll send a code to verify your identity</Text>
+            </Card.Section>
+            <Card.Section>
+              <FormLayout>
+                <TextField
+                  label="Phone Number"
+                  value={phoneNumber}
+                  onChange={setPhoneNumber}
+                  type="tel"
+                  autoComplete="tel"
+                  required
+                />
+                <Button primary onClick={handleSubmit}>Send Code</Button>
+              </FormLayout>
+            </Card.Section>
           </Card>
         );
         
       case 'otp':
         return (
-          <Card>
-            <BlockStack gap="4">
-              <BlockStack gap="1">
-                <Text variant="headingLg" as="h2">Verify OTP</Text>
-                <Text variant="bodyMd" color="subdued">Enter the code sent to {phoneNumber}</Text>
-              </BlockStack>
-              
-              <form onSubmit={handleSubmit}>
-                <FormLayout>
-                  <TextField
-                    label="One-Time Password"
-                    value={otp}
-                    onChange={(value) => setOtp(value)}
-                    autoComplete="one-time-code"
-                    requiredIndicator
-                  />
-                  
-                  <Box paddingBlockStart="2">
-                    <Button primary submit fullWidth>Verify & Connect</Button>
-                  </Box>
-                </FormLayout>
-              </form>
-            </BlockStack>
+          <Card sectioned>
+            <Card.Section title="Verify OTP">
+              <Text>Enter the code sent to {phoneNumber}</Text>
+            </Card.Section>
+            <Card.Section>
+              <FormLayout>
+                <TextField
+                  label="One-Time Password"
+                  value={otp}
+                  onChange={setOtp}
+                  autoComplete="one-time-code"
+                  required
+                />
+                <Button primary onClick={handleSubmit}>Verify & Connect</Button>
+              </FormLayout>
+            </Card.Section>
           </Card>
         );
         
       case 'success':
         return (
-          <Card>
-            <BlockStack gap="4">
-              <BlockStack gap="1">
-                <Text variant="headingLg" as="h2">Successfully Connected!</Text>
-                <Text variant="bodyMd" color="subdued">Your Shopify store is now connected to ShopLinx</Text>
-              </BlockStack>
-              
-              <Text variant="bodyMd">You will be redirected back to the application automatically.</Text>
-            </BlockStack>
+          <Card sectioned>
+            <Card.Section title="Successfully Connected!">
+              <Text>Your Shopify store is now connected to ShopLinx</Text>
+            </Card.Section>
+            <Card.Section>
+              <Text>You will be redirected back to the application automatically.</Text>
+            </Card.Section>
           </Card>
         );
     }
   };
 
   return (
-    <Frame>
-      <Page>
-        <div style={{ 
-          display: 'flex', 
-          minHeight: '100vh', 
-          alignItems: 'center', 
-          justifyContent: 'center', 
-          padding: '1rem' 
-        }}>
-          <Box maxWidth="450px" width="100%">
-            {renderContent()}
-          </Box>
-        </div>
-      </Page>
-    </Frame>
+    <Page>
+      <div style={{ maxWidth: '450px', margin: '0 auto' }}>
+        {renderContent()}
+      </div>
+    </Page>
   );
 };
 
