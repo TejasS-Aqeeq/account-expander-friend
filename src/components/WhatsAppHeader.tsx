@@ -6,6 +6,7 @@ import {
   BlockStack,
   InlineStack
 } from '@shopify/polaris';
+import { ExternalIcon } from '@shopify/polaris-icons';
 
 const WhatsAppHeader: React.FC = () => {
   return (

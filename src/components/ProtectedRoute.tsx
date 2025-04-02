@@ -14,7 +14,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   // Additional check to ensure authentication state is consistent
   useEffect(() => {
     // Check localStorage directly to ensure authentication state is correct
-    const authStatus = localStorage.getItem('interakt_connection_status');
+    const authStatus = localStorage.getItem('shoplinx_connection_status');
     if (authStatus !== 'connected' && isAuthenticated) {
       // If localStorage indicates not connected but state says authenticated,
       // refresh auth context by triggering navigation

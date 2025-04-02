@@ -17,7 +17,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   // Check if user is authenticated on mount and whenever localStorage changes
   useEffect(() => {
     const checkAuthStatus = () => {
-      const authStatus = localStorage.getItem('interakt_connection_status');
+      const authStatus = localStorage.getItem('shoplinx_connection_status');
       setIsAuthenticated(authStatus === 'connected');
     };
 
@@ -33,12 +33,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, []);
 
   const login = () => {
-    localStorage.setItem('interakt_connection_status', 'connected');
+    localStorage.setItem('shoplinx_connection_status', 'connected');
     setIsAuthenticated(true);
   };
 
   const logout = () => {
-    localStorage.removeItem('interakt_connection_status');
+    localStorage.removeItem('shoplinx_connection_status');
     setIsAuthenticated(false);
     navigate('/');
   };
