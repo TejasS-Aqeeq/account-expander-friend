@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import WhatsAppSetup from '@/components/WhatsAppSetup';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
+import { Frame } from '@shopify/polaris';
 
 const Index = () => {
   const { isAuthenticated } = useAuth();
@@ -16,9 +17,11 @@ const Index = () => {
   }, [isAuthenticated, navigate]);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
-      <WhatsAppSetup />
-    </div>
+    <Frame>
+      <div style={{ minHeight: '100vh', backgroundColor: '#f6f6f7', padding: '2rem' }}>
+        <WhatsAppSetup />
+      </div>
+    </Frame>
   );
 };
 

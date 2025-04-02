@@ -1,7 +1,13 @@
 
 import React from 'react';
-import { ArrowUpRight } from 'lucide-react';
-import { Button } from "@/components/ui/button";
+import { 
+  Button,
+  Link,
+  BlockStack,
+  Box,
+  InlineStack,
+  Text
+} from '@shopify/polaris';
 
 interface WhatsAppFooterProps {
   isConnected: boolean;
@@ -10,23 +16,32 @@ interface WhatsAppFooterProps {
 
 const WhatsAppFooter: React.FC<WhatsAppFooterProps> = ({ isConnected, onProceed }) => {
   return (
-    <>
-      <div className="mt-6 flex justify-center">
+    <BlockStack gap="8">
+      <Box display="flex" justifyContent="center">
         <Button
-          className={isConnected ? "bg-teal-600 hover:bg-teal-700" : "bg-gray-300 text-gray-500 cursor-not-allowed hover:bg-gray-300"}
-          disabled={!isConnected}
+          primary
           onClick={onProceed}
+          disabled={!isConnected}
+          tone={isConnected ? "success" : undefined}
         >
           Proceed
         </Button>
-      </div>
+      </Box>
 
-      <div className="mt-10 flex justify-center">
-        <a href="#" className="text-teal-600 hover:text-teal-700 text-sm flex items-center">
-          Learn More about Interakt <ArrowUpRight className="ml-1 h-4 w-4" />
-        </a>
-      </div>
-    </>
+      <Box display="flex" justifyContent="center">
+        <Link url="#" external monochrome removeUnderline>
+          <InlineStack gap="1" align="center">
+            <Text variant="bodySm" color="success">Learn More about ShopLinx</Text>
+            <img 
+              src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2313855c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m7 17 10-10'/><path d='M7 7h10v10'/></svg>"
+              alt=""
+              width="16"
+              height="16"
+            />
+          </InlineStack>
+        </Link>
+      </Box>
+    </BlockStack>
   );
 };
 

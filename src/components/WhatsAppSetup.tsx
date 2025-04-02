@@ -1,7 +1,14 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ExpandableCard from './ExpandableCard';
+import { 
+  Page, 
+  Card, 
+  Button,
+  LegacyCard,
+  BlockStack,
+  Box
+} from '@shopify/polaris';
 import WhatsAppHeader from './WhatsAppHeader';
 import ConnectionCardContent from './ConnectionCardContent';
 import WhatsAppFooter from './WhatsAppFooter';
@@ -22,27 +29,40 @@ const WhatsAppSetup = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto bg-gray-50 p-6 rounded-lg shadow-sm">
-      <WhatsAppHeader />
-
-      <ExpandableCard 
-        title="Create a free account on ShopLinx"
-        isOpen={isExpanded}
-        onToggle={toggleExpand}
-        isCompleted={isConnected}
-      >
-        <ConnectionCardContent 
-          isConnected={isConnected}
-          isCheckingConnection={isCheckingConnection}
-          onConnect={handleConnect}
-        />
-      </ExpandableCard>
-
-      <WhatsAppFooter 
-        isConnected={isConnected}
-        onProceed={handleProceed}
-      />
-    </div>
+    <Page>
+      <Box padding="4" maxWidth="680px" margin="auto">
+        <Card>
+          <BlockStack gap="4">
+            <Box padding="4">
+              <WhatsAppHeader />
+            </Box>
+            
+            <Box padding={{horizontal: "4", bottom: "4"}}>
+              <LegacyCard
+                title="Create a free account on ShopLinx"
+                sectioned
+                expandable
+                expanded={isExpanded}
+                onToggle={toggleExpand}
+              >
+                <ConnectionCardContent 
+                  isConnected={isConnected}
+                  isCheckingConnection={isCheckingConnection}
+                  onConnect={handleConnect}
+                />
+              </LegacyCard>
+            </Box>
+            
+            <Box padding="4">
+              <WhatsAppFooter 
+                isConnected={isConnected}
+                onProceed={handleProceed}
+              />
+            </Box>
+          </BlockStack>
+        </Card>
+      </Box>
+    </Page>
   );
 };
 

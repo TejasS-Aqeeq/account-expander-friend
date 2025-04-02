@@ -1,9 +1,19 @@
 
-import React, { useState } from 'react';
-import { ArrowUpRight, CheckCircle2, AlertCircle } from 'lucide-react';
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import React, { useState, useEffect } from 'react';
+import { 
+  Page, 
+  Card, 
+  Layout, 
+  Text, 
+  Button, 
+  Link, 
+  Badge,
+  InlineStack,
+  BlockStack,
+  Box,
+  Banner,
+  TextContainer
+} from '@shopify/polaris';
 import { useAuth } from '@/context/AuthContext';
 
 const Dashboard = () => {
@@ -19,7 +29,7 @@ const Dashboard = () => {
   const [apiNumber, setApiNumber] = useState('917439469952');
   
   // Simulate sync completion after 5 seconds
-  React.useEffect(() => {
+  useEffect(() => {
     if (syncStatus === 'syncing') {
       const timer = setTimeout(() => {
         setSyncStatus('completed');
@@ -33,138 +43,170 @@ const Dashboard = () => {
     // Use the logout function from auth context
     logout();
   };
+
+  const renderExternalLinkIcon = () => (
+    <img 
+      src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2313855c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m7 17 10-10'/><path d='M7 7h10v10'/></svg>"
+      alt=""
+      width="16"
+      height="16"
+    />
+  );
   
   return (
-    <div className="max-w-5xl mx-auto bg-gray-50 p-6">
-      <div className="flex justify-between items-center mb-6">
-        <div>
-          <h1 className="text-2xl font-semibold text-gray-700">Welcome to your Shopify-synced WhatsApp Store!</h1>
-          <p className="text-gray-500 mt-2">Manage your WhatsApp store integration with Shopify</p>
-        </div>
-        <div className="flex items-center gap-4">
-          <a href="#" className="text-teal-600 hover:text-teal-700 text-sm flex items-center">
-            Quick Tour <ArrowUpRight className="ml-1 h-4 w-4" />
-          </a>
-          <a href="#" className="text-teal-600 hover:text-teal-700 text-sm flex items-center">
-            Get Support <ArrowUpRight className="ml-1 h-4 w-4" />
-          </a>
-        </div>
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        {/* Product Status Card */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Product Status on ShopLinx</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="bg-blue-50 border border-blue-100 p-4 rounded-lg mb-4">
-              {syncStatus === 'syncing' ? (
-                <div className="flex items-start">
-                  <AlertCircle className="h-5 w-5 text-blue-500 mr-2 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-gray-700 font-medium">Product syncing is in process</p>
-                    <p className="text-gray-500 text-sm">This may take upto 15mins</p>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex items-center">
-                  <CheckCircle2 className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
-                  <p className="text-gray-700">All products have been successfully synced to WhatsApp!</p>
-                </div>
-              )}
-            </div>
-            
-            <div className="flex justify-between items-center mb-2">
-              <Badge variant="outline" className="bg-green-100 text-green-800 hover:bg-green-100 px-3 py-1">Approved</Badge>
-              <span className="text-gray-700">{approvedCount} Products</span>
-            </div>
-            
-            <div className="flex justify-between items-center mb-4">
-              <Badge variant="outline" className="bg-red-100 text-red-800 hover:bg-red-100 px-3 py-1">Rejected</Badge>
-              <span className="text-gray-700">{rejectedCount} Products</span>
-            </div>
-            
-            <div className="text-center">
-              <a href="#" className="text-teal-600 hover:text-teal-700 text-sm flex items-center justify-center">
-                View all products <ArrowUpRight className="ml-1 h-4 w-4" />
-              </a>
-            </div>
-          </CardContent>
-        </Card>
+    <Page>
+      <Box paddingBlockEnd="4">
+        <InlineStack align="space-between">
+          <BlockStack gap="2">
+            <Text variant="headingLg" as="h1">Welcome to your Shopify-synced WhatsApp Store!</Text>
+            <Text variant="bodyMd" color="subdued">Manage your WhatsApp store integration with Shopify</Text>
+          </BlockStack>
+          <InlineStack gap="4">
+            <Link url="#" external monochrome removeUnderline>
+              <InlineStack gap="1" align="center">
+                <Text variant="bodySm" color="success">Quick Tour</Text>
+                {renderExternalLinkIcon()}
+              </InlineStack>
+            </Link>
+            <Link url="#" external monochrome removeUnderline>
+              <InlineStack gap="1" align="center">
+                <Text variant="bodySm" color="success">Get Support</Text>
+                {renderExternalLinkIcon()}
+              </InlineStack>
+            </Link>
+          </InlineStack>
+        </InlineStack>
+      </Box>
+
+      <Layout>
+        <Layout.Section oneHalf>
+          <Card>
+            <BlockStack gap="4">
+              <Text variant="headingMd" as="h2">Product Status on ShopLinx</Text>
+              
+              <Box paddingBlockStart="2">
+                {syncStatus === 'syncing' ? (
+                  <Banner tone="info">
+                    <BlockStack gap="1">
+                      <Text variant="bodyMd" fontWeight="medium">Product syncing is in process</Text>
+                      <Text variant="bodySm" color="subdued">This may take upto 15mins</Text>
+                    </BlockStack>
+                  </Banner>
+                ) : (
+                  <Banner tone="success">
+                    <Text variant="bodyMd">All products have been successfully synced to WhatsApp!</Text>
+                  </Banner>
+                )}
+              </Box>
+              
+              <BlockStack gap="2">
+                <Box paddingBlockEnd="2">
+                  <InlineStack align="space-between">
+                    <Badge tone="success">Approved</Badge>
+                    <Text variant="bodyMd">{approvedCount} Products</Text>
+                  </InlineStack>
+                </Box>
+                
+                <Box paddingBlockEnd="3">
+                  <InlineStack align="space-between">
+                    <Badge tone="critical">Rejected</Badge>
+                    <Text variant="bodyMd">{rejectedCount} Products</Text>
+                  </InlineStack>
+                </Box>
+              </BlockStack>
+              
+              <Box display="flex" justifyContent="center">
+                <Link url="#" external monochrome removeUnderline>
+                  <InlineStack gap="1" align="center">
+                    <Text variant="bodySm" color="success">View all products</Text>
+                    {renderExternalLinkIcon()}
+                  </InlineStack>
+                </Link>
+              </Box>
+            </BlockStack>
+          </Card>
+        </Layout.Section>
         
-        {/* ShopLinx Account Card */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">ShopLinx account</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-start mb-4">
-              <div className="h-10 w-10 bg-amber-200 rounded-full flex-shrink-0 mr-3"></div>
-              <div className="flex-grow">
-                <div className="flex justify-between w-full">
-                  <div>
-                    <p className="text-gray-700">Connected WhatsApp</p>
-                    <p className="text-gray-500">API number</p>
-                    <p className="text-gray-700">{apiNumber}</p>
-                  </div>
-                  <Button 
-                    variant="outline" 
-                    className="border-gray-300 hover:bg-gray-100 text-gray-700"
-                    onClick={handleDisconnect}
-                  >
-                    Disconnect
-                  </Button>
-                </div>
-              </div>
-            </div>
-            
-            <p className="text-gray-600 mb-1">
-              Send a WhatsApp message to your WhatsApp API number and reply to it from the{' '}
-              <a href="#" className="text-teal-600 hover:text-teal-700 inline-flex items-center">
-                ShopLinx Inbox <ArrowUpRight className="ml-1 h-3 w-3" />
-              </a>{' '}
-              !
-            </p>
-            
-            <div className="bg-gray-50 p-3 rounded-lg border border-gray-100 mt-3">
-              <p className="text-gray-600 text-sm font-medium mb-1">Note:</p>
-              <p className="text-gray-600 text-sm">
-                To start a conversation with a new customer, or, to message customers more than 24 hours after their last reply, you need to send them{' '}
-                <a href="#" className="text-teal-600 hover:text-teal-700 inline-flex items-center">
-                  pre-approved WhatsApp Templates <ArrowUpRight className="ml-1 h-3 w-3" />
-                </a>
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+        <Layout.Section oneHalf>
+          <Card>
+            <BlockStack gap="4">
+              <Text variant="headingMd" as="h2">ShopLinx account</Text>
+              
+              <InlineStack gap="3">
+                <Box background="bg-surface-secondary" borderRadius="100%" height="40px" width="40px" />
+                <BlockStack gap="1" blockAlignment="center">
+                  <Text variant="bodyMd">Connected WhatsApp</Text>
+                  <Text variant="bodySm" color="subdued">API number</Text>
+                  <Text variant="bodyMd">{apiNumber}</Text>
+                </BlockStack>
+                <Box marginLeft="auto">
+                  <Button onClick={handleDisconnect} plain>Disconnect</Button>
+                </Box>
+              </InlineStack>
+              
+              <TextContainer>
+                <Text variant="bodyMd">
+                  Send a WhatsApp message to your WhatsApp API number and reply to it from the{' '}
+                  <Link url="#" external monochrome>
+                    <InlineStack gap="1" align="center" as="span">
+                      <Text variant="bodyMd" color="success" as="span">ShopLinx Inbox</Text>
+                      {renderExternalLinkIcon()}
+                    </InlineStack>
+                  </Link>
+                  !
+                </Text>
+              </TextContainer>
+              
+              <Box background="bg-surface-secondary" padding="3" borderRadius="2">
+                <BlockStack gap="1">
+                  <Text variant="bodySm" fontWeight="medium">Note:</Text>
+                  <Text variant="bodySm">
+                    To start a conversation with a new customer, or, to message customers more than 24 hours after their last reply, you need to send them{' '}
+                    <Link url="#" external monochrome>
+                      <InlineStack gap="1" align="center" as="span">
+                        <Text variant="bodySm" color="success" as="span">pre-approved WhatsApp Templates</Text>
+                        {renderExternalLinkIcon()}
+                      </InlineStack>
+                    </Link>
+                  </Text>
+                </BlockStack>
+              </Box>
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+      </Layout>
       
-      {/* Additional Section: Send WhatsApp Catalog Messages */}
-      <Card className="mb-6">
-        <CardHeader>
-          <CardTitle className="text-lg">Send WhatsApp Catalog Messages</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col md:flex-row justify-between">
-            <div className="md:w-1/2 mb-4 md:mb-0">
-              <p className="text-gray-600">
-                While chatting with customers on WhatsApp, send them your Shopify products from the ShopLinx inbox.
-              </p>
-            </div>
-            <div className="md:w-1/2 flex flex-col items-center md:items-end">
-              <p className="text-gray-600 mb-2">Send your 1st WhatsApp Catalog Message!</p>
-              <Button className="bg-teal-600 hover:bg-teal-700">
-                Go to Inbox
-              </Button>
-              <a href="#" className="text-teal-600 hover:text-teal-700 text-sm flex items-center mt-2">
-                See how <ArrowUpRight className="ml-1 h-4 w-4" />
-              </a>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+      <Box paddingBlockStart="4">
+        <Card>
+          <BlockStack gap="4">
+            <Text variant="headingMd" as="h2">Send WhatsApp Catalog Messages</Text>
+            
+            <Layout>
+              <Layout.Section oneHalf>
+                <TextContainer>
+                  <Text variant="bodyMd">
+                    While chatting with customers on WhatsApp, send them your Shopify products from the ShopLinx inbox.
+                  </Text>
+                </TextContainer>
+              </Layout.Section>
+              
+              <Layout.Section oneHalf>
+                <BlockStack gap="2" align="end">
+                  <Text variant="bodyMd">Send your 1st WhatsApp Catalog Message!</Text>
+                  <Button tone="success" primary>Go to Inbox</Button>
+                  <Link url="#" external monochrome removeUnderline>
+                    <InlineStack gap="1" align="center">
+                      <Text variant="bodySm" color="success">See how</Text>
+                      {renderExternalLinkIcon()}
+                    </InlineStack>
+                  </Link>
+                </BlockStack>
+              </Layout.Section>
+            </Layout>
+          </BlockStack>
+        </Card>
+      </Box>
+    </Page>
   );
 };
 

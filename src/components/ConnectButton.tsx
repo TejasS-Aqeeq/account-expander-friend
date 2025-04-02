@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Button } from "@/components/ui/button";
+import { Button } from "@shopify/polaris";
 
 interface ConnectButtonProps {
   isConnected: boolean;
@@ -15,10 +15,9 @@ const ConnectButton: React.FC<ConnectButtonProps> = ({
 }) => {
   if (isConnected) {
     return (
-      <Button 
-        variant="default"
-        className="bg-green-500 hover:bg-green-600 text-white" 
+      <Button
         disabled
+        tone="success"
       >
         Connected
       </Button>
@@ -26,11 +25,10 @@ const ConnectButton: React.FC<ConnectButtonProps> = ({
   }
   
   return (
-    <Button 
-      variant="default"
-      className="bg-teal-400 hover:bg-teal-500" 
+    <Button
       onClick={onConnect}
       disabled={isCheckingConnection}
+      tone="success"
     >
       {isCheckingConnection ? "Connecting..." : "Connect"}
     </Button>
